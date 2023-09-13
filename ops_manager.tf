@@ -3,6 +3,7 @@ resource "google_compute_firewall" "ops-manager-external" {
   name        = "${var.env_name}-ops-manager-external"
   network     = google_compute_network.pcf-network.name
   target_tags = ["${var.env_name}-ops-manager-external"]
+  source_ranges = ["0.0.0.0/0"]
 
   allow {
     protocol = "icmp"
@@ -129,6 +130,7 @@ resource "google_storage_bucket" "director" {
   force_destroy = true
 
   count = var.opsman_storage_bucket_count
+  location = var.region
 }
 
 resource "tls_private_key" "ops-manager" {
